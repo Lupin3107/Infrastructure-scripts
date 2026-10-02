@@ -1,0 +1,85 @@
+============================================
+Building the image and runing the upgrade
+============================================
+
+# mount the disk image
+.\psexec.exe \\HOSTNAME -s powershell.exe -Command "Mount-DiskImage -ImagePath 'C:\Path\BrazilianPortuguese_x64.iso'"
+
+
+# check
+.\psexec.exe \\HOSTNAME cmd
+D:
+dir
+find = setup.exe
+
+
+============================================
+Running the setup of the image
+============================================
+
+#run
+.\PsExec.exe \\HOSTNAME -s powershell -Command "Start-Process 'D:\setup.exe' -ArgumentList '/auto upgrade /quiet /noreboot /eula accept /dynamicupdate disable' -Wait
+
+-----------
+VIA CMD
+-----------
+
+.\PsExec.exe \\HOSTNAME -s cmd.exe /c "start /wait D:\setup.exe /auto upgrade /quiet"
+
+.\PsExec.exe \\HOSTNAME -i -s cmd.exe /c "start /wait D:\setup.exe /auto upgrade /quiet"
+
+============================================
+Checking Windows Version
+============================================
+
+#run
+.\PsExec.exe \\HOSTNAME -s cmd /c "wmic os get Caption,CSDVersion /value
+
+.\PsExec.exe \\HOSTNAME -s powershell -Command "(Get-CimInstance Win32_OperatingSystem).Caption"
+
+
+============================================
+Checking Hard Disk Space
+============================================
+
+#run
+.\PsExec.exe \\HOSTNAME -s powershell -Command "Get-PSDrive -PSProvider 'FileSystem' | Select-Object
+
+============================================
+Checking TPM
+============================================
+
+.\PsExec.exe \\HOSTNAME -s powershell -Command "Get-Tpm"
+
+============================================
+Checking Secure Boot
+============================================
+
+.\PsExec.exe \\HOSTNAME -s powershell -Command "Confirm-SecureBootUEFI"
+
+============================================
+CheckinLastBootUpTime
+============================================
+
+.\PsExec.exe \\HOSTNAME -s powershell -Command (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
+
+.\PsExec.exe \\HOSTNAME -s powershell
+
+$uptime = (Get-Date) - (Get-CimInstance -ClassName Win32_OperatingSystem).LastBootUpTime
+Write-Host "Tempo de uso desde a última inicialização: $($uptime.Days) dias, $($uptime.Hours) horas, $($uptime.Minutes) minutos."
+
+============================================
+Checkin Partition Disk
+============================================
+
+.\PsExec.exe \\HOSTNAME -s powershell -Command "Get-Disk | Select Number, PartitionStyle"
+
+Se o resultado for GPT, o sistema est� usando UEFI.
+Se for MBR, est� em Legacy BIOS.
+
+
+
+
+
+
+

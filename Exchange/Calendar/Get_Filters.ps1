@@ -1,0 +1,1 @@
+Get-MailboxFolderPermission -Identity "example@domain.com:\Calendar"

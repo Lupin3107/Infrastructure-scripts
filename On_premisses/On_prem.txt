@@ -1,0 +1,9 @@
+Get-PSSessionConfiguration (Localmente)
+Enter-PSSession -ComputerName dcExample -credential $cred
+===================================================================================================
+-----------------------------------------------------------
+Enable mailbox
+-----------------------------------------------------------
+$remoteDomain = "@domain.mail.onmicrosoft.com"
+$user = "alias_Example"
+Enable-RemoteMailbox $user -RemoteRoutingAddress ($user + $remoteDomain)

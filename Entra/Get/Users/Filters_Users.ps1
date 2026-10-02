@@ -1,0 +1,1 @@
+Get-mguser -Search '"displayName:Centro de suporte - Compras"' -ConsistencyLevel eventual | FL Displayname, UserPrincipalName

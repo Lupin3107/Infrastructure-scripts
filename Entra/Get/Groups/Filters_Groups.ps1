@@ -1,0 +1,1 @@
+Get-MgGroup -Search '"displayName:Portos SP"' -ConsistencyLevel eventual

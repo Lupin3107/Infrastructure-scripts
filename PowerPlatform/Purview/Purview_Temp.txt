@@ -1,0 +1,36 @@
+================================================
+Compliance Search - Purge
+================================================
+------------------------------------------------
+Exchange
+================================================
+
+New-complianceSearch `
+-Name "Ticket_example" `
+-ExchangeLocation "Example@domain.com.br" `
+-ContentMatchQuery '(From:"Example@domain.com.br") AND (Subject="Subject Example") AND (Kind:meetings)'
+
+------------------------------------------------
+Sharepoint
+================================================
+
+New-complianceSearch `
+-Name "Ticket_example" `
+-SharepointLocation "https://domain-my.sharepoint.com/personal/Example_domain_com_br" `
+-ContentMatchQuery '(documentlink:"https://domain-my.sharepoint.com/personal/Example_domain_com_br/Documents/Documentos/Path/Example/*")'
+-----------------------------------------------------------------------------------------------------------------
+
+Start-complianceSearch "Ticket_example"
+
+-----------------------------------------------------------------------------------------------------------------
+Get-complianceSearch "Ticket_example"
+| FL Status, Items, ContentMatchQuery, JobStartTime, JobEndTime, ExchangeLocation
+-----------------------------------------------------------------------------------------------------------------
+New-ComplianceSearchAction `
+-SearchName "Ticket_example" `
+-Purge `
+-PurgeType SoftDelete `
+-Confirm:$false
+-----------------------------------------------------------------------------------------------------------------
+Get-complianceSearchAction "Ticket_example_Purge"
+| FL Status, Items, JobStartTime, JobEndTime, ExchangeLocation
